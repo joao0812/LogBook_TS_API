@@ -8,7 +8,13 @@ import compression from "compression";
 import cors from "cors";
 import logger from "morgan";
 
+import logBookDB from "./configs/mongoDB_connection";
+
 config();
+
+// MongoDB connection validation
+logBookDB.on('error', (err)=> console.log(`ERRO to try connect MongoDB -> ${err}`))
+logBookDB.once('open', ()=> console.log('Database connected'))
 
 export const app = express();
 
