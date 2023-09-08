@@ -1,5 +1,4 @@
 import express from "express";
-
 import { config } from "dotenv";
 
 import bodyParser from "body-parser";
@@ -9,6 +8,11 @@ import cors from "cors";
 import logger from "morgan";
 
 import logBookDB from "./configs/mongoDB_connection";
+
+import { GetAreaRepository } from "./repositories/Area/getArea/mongo-get-area";
+import { GetAreaController } from "./controllers/Area/getArea/area-get";
+
+import areaRouter from './routes/areaRouter'
 
 config();
 
@@ -29,6 +33,4 @@ app.use(cookieParser())
 app.use(compression())
 app.use(logger('dev'))
 
-app.get('/', (req, res)=>{
-    res.send('HELLO')
-})
+app.use('/areas', areaRouter)
