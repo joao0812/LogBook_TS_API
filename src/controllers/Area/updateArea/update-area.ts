@@ -4,7 +4,7 @@ import { IUpdateAreaController, IUpdateAreaRepository } from "./protocols";
 
 export class UpdateAreaController implements IUpdateAreaController {
     constructor(private readonly updateAreaRepository: IUpdateAreaRepository, private readonly id: string ,private readonly body: Area) {}
-    async handle(): Promise<HTTPresponse<Area>> {
+    async handle(): Promise<HTTPresponse<Area[]>> {
         try {
             const area = await this.updateAreaRepository.updateArea(this.id, this.body)
             return {
