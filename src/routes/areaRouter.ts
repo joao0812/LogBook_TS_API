@@ -5,6 +5,8 @@ import { CreateAreaRepository } from "../repositories/Area/createArea/mongo-crea
 import { CreateAreaController } from "../controllers/Area/createArea/create-area";
 import { DeleteAreaRepository } from "../repositories/Area/deleteArea/mongo-delete-area";
 import { DeleteAreaController } from "../controllers/Area/deleteArea/delete-area";
+import { UpdateAreaRepository } from "../repositories/Area/updateArea/mongo-update-area";
+import { UpdateAreaController } from "../controllers/Area/updateArea/update-area";
 
 const router = express.Router();
 
@@ -39,6 +41,13 @@ router
     
     const createAreaController = new CreateAreaController(createAreaRepository, req.body)
     const { body, statusCode } = await createAreaController.handleOne();
+    res.send(body).status(statusCode);
+  })
+  .put('/:id', express.urlencoded({extended: true}), async (req, res)=> {
+    const updateAreaRepository = new UpdateAreaRepository()
+    
+    const updateAreaController = new UpdateAreaController(updateAreaRepository, req.params.id ,req.body)
+    const { body, statusCode } = await updateAreaController.handle();
     res.send(body).status(statusCode);
   })
   .delete('/:id', async (req, res)=> {
