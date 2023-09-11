@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import logBookDB from '../../../configs/mongoDB_connection';
 import {ICreateAreaRepository} from '../../../controllers/Area/createArea/protocols'
 import { Area } from '../../../models/Area';
@@ -21,7 +22,8 @@ export class CreateAreaRepository implements ICreateAreaRepository {
         //const areas = logBookDB.collection('areas').find({_id: {$in: insertedIds}})
         return [{
             id: '123',
-            area_name: 'software'
+            area_name: 'software',
+            company_id: new mongoose.Types.ObjectId('123')
         }]
 
     }

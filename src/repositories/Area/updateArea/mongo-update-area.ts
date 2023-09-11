@@ -25,10 +25,12 @@ export class UpdateAreaRepository implements IUpdateAreaRepository {
       {
         id: oldArea._id.toHexString(),
         area_name: oldArea.area_name,
+        company_id: new mongoose.Types.ObjectId('123')
       },
       {
         id: newArea._id.toHexString(),
         area_name: newArea.area_name,
+        company_id: new mongoose.Types.ObjectId('123')
       },
     ];
   }
