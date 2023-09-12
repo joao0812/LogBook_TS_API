@@ -1,19 +1,21 @@
 import mongoose from 'mongoose';
 import logBookDB from '../../../configs/mongoDB_connection';
 import {ICreateAreaRepository} from '../../../controllers/Area/createArea/protocols'
-import { Area } from '../../../models/Area';
+import areaModel, { Area } from '../../../models/Area';
 export class CreateAreaRepository implements ICreateAreaRepository {
-    async createOneArea(area_name: {area_name: string}[]): Promise<Area> {
+    async createOneArea(area_name: Omit<Area, 'id'>): Promise<Area> {
         console.log(area_name)
-        const {insertedId} = await logBookDB.collection('areas').insertOne(area_name[0])
-        const area = await logBookDB.collection<Omit<Area, 'id'>>('areas').findOne({_id: insertedId})
-        if(!area){
+        /* const {insertedId} = await logBookDB.collection('areas').insertOne(area_name)
+        const area = await logBookDB.collection<Omit<Area, 'id'>>('areas').findOne({_id: insertedId}) */
+        let ar = new areaModel(area_name)
+        let doc = await ar.save()
+        if(!doc){
             throw new Error('Area not created')
         }
-        const {_id, ...rest} = area
-        return {id: _id.toHexString(), ...rest}
+        const {_id, ...rest} = doc
+        return {id: _id.toHexString(),  ...rest}
     }
-    async createAreas(area_name: {area_name: string}[]): Promise<Area[]> {
+    async createAreas(area_name: Omit<Area, 'id'>[]): Promise<Area[]> {
         const area_name_obj: {area_name: string}[] = [] 
         area_name.map((area)=> {
           area_name_obj.push(area)  

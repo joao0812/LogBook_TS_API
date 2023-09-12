@@ -1,4 +1,4 @@
 export interface HTTPresponse<T> {
     statusCode: number,
-    body: T | string
+    body: T | string | T[]
 }

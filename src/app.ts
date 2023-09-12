@@ -13,6 +13,7 @@ import { GetAreaRepository } from "./repositories/Area/getArea/mongo-get-area";
 import { GetAreaController } from "./controllers/Area/getArea/area-get";
 
 import areaRouter from './routes/areaRouter'
+import companyRouter from './routes/companyRoute'
 
 config();
 
@@ -33,4 +34,5 @@ app.use(cookieParser())
 app.use(compression())
 app.use(logger('dev'))
 
+app.use('/companies', companyRouter)
 app.use('/areas', areaRouter)

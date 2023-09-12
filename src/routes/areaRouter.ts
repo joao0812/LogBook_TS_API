@@ -32,13 +32,13 @@ router
   .post('/many', express.urlencoded({extended: true}), async (req, res)=> {
     const createAreaRepository = new CreateAreaRepository()
 
-    const createAreaController = new CreateAreaController(createAreaRepository, [req.body])
+    const createAreaController = new CreateAreaController(createAreaRepository, req.body)
     const { body, statusCode } = await createAreaController.handle();
     res.send(body).status(statusCode);
   })
   .post('/', express.urlencoded({extended: true}), async (req, res)=> {
     const createAreaRepository = new CreateAreaRepository()
-    
+
     const createAreaController = new CreateAreaController(createAreaRepository, req.body)
     const { body, statusCode } = await createAreaController.handleOne();
     res.send(body).status(statusCode);

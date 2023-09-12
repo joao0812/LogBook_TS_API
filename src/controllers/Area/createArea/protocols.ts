@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Area } from "../../../models/Area";
 import { HTTPresponse } from "../../types/globalProtocols";
 
@@ -7,6 +8,6 @@ export interface ICreateAreaController {
 }
 
 export interface ICreateAreaRepository {
-    createAreas(area_name: {area_name: string}[]): Promise<Area[]>
-    createOneArea(area_name: {area_name: string}[]): Promise<Area>
+    createAreas(area_name: Omit<Area, 'id'>[]): Promise<Area[]>
+    createOneArea(area_name: Omit<Area, 'id'>): Promise<Area>
 }
