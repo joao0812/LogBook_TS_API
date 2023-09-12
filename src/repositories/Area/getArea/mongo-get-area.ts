@@ -5,17 +5,13 @@ import areaModel, { Area } from "../../../models/Area";
 
 export class GetAreaRepository implements IGetAreaRepository {
   async getAreas(): Promise<Area[]> {
-    /* const areas = await logBookDB
-      .collection<Omit<Area, "id">>("areas")
-      .find()
-      .toArray(); */
     const areas = await areaModel.find().populate("company_id").lean();
-    if(!areas){
-        throw new Error('Erro to try get areas')
+    if (!areas) {
+      throw new Error("Erro to try get areas");
     }
     return areas.map(({ _id, ...rest }) => ({
       ...rest,
-      id: _id.toHexString(),
+      id: _id.toHexString()
     }));
   }
   async getOneArea(id: string): Promise<Area> {
