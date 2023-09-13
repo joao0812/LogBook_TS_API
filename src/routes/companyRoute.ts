@@ -4,6 +4,8 @@ import { CreateCompanyController } from '../controllers/Company/createCompany/cr
 import { CreateCompanyRepository } from '../repositories/Company/createCompany/mongo-create-company'
 import { GetCompanyRepository } from '../repositories/Company/getCompany/mongo-get-company'
 import { GetCompanyController } from '../controllers/Company/getCompany/get-company'
+import { UpdateCompanyRepository } from '../repositories/Company/updateCompany/mongo-update-company'
+import { UpdateCompanyController } from '../controllers/Company/updateCompany/update-company'
 
 const router = express.Router()
 
@@ -22,6 +24,14 @@ router
         const getCompanyController = new GetCompanyController(getCompanyRepository)
 
         const {body, statusCode} = await getCompanyController.handle();
+        res.send(body).status(statusCode)
+    })
+    .put('/:id', express.urlencoded({extended: true}), async (req, res)=> {
+        const updateCompanyRepository = new UpdateCompanyRepository()
+        
+        const updateCompanyController = new UpdateCompanyController(updateCompanyRepository, req.params.id, req.body)
+
+        const {body, statusCode} = await updateCompanyController.handle();
         res.send(body).status(statusCode)
     })
 
