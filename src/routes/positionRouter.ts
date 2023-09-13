@@ -3,6 +3,8 @@ import { CreatePositionRepository } from '../repositories/Position/createPositio
 import { CreatePositionController } from '../controllers/Position/createPosition/create-positon'
 import { GetPositionRepository } from '../repositories/Position/getPosition/mongo-get-position'
 import { GetPositionController } from '../controllers/Position/getPosition/get-position'
+import { DeletePositionRepository } from '../repositories/Position/deletePosition/mongo-delete-position'
+import { DeletePositionController } from '../controllers/Position/deletePosition/delete-position'
 
 const router = express.Router()
 
@@ -17,6 +19,12 @@ router
         const getPositionRepository = new GetPositionRepository()
         const getPositionController = new GetPositionController(getPositionRepository)
         const {body, statusCode} = await getPositionController.handle()
+        res.send(body).status(statusCode)
+    })
+    .delete('/:id', async (req, res)=> {
+        const deletePositonRepository = new DeletePositionRepository()
+        const deletePositionController = new DeletePositionController(deletePositonRepository, req.params.id)
+        const {body, statusCode} = await deletePositionController.handle()
         res.send(body).status(statusCode)
     })
 
