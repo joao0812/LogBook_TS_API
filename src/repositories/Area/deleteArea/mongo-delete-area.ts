@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 import logBookDB from "../../../configs/mongoDB_connection";
 import { IDeleteAreaRepository } from "../../../controllers/Area/deleteArea/protocols";
-import { Area } from "../../../models/Area";
+import areaModel, { Area } from "../../../models/Area";
 
 export class DeleteAreaRepository implements IDeleteAreaRepository {
     async deleteArea(id: string): Promise<Area> {
-        const areaDeleted = await logBookDB.collection<Omit<Area, 'id'>>('areas').findOneAndDelete({_id: new mongoose.Types.ObjectId(id)})
-        if(!areaDeleted.value){
+        const area = await areaModel.findOneAndDelete({_id: new mongoose.Types.ObjectId(id)}).lean().populate('company_id')
+        if(!area){
             throw new Error('Area to delete not found')
         }
-        const {_id, ...rest} = areaDeleted.value
+        const {_id, ...rest} = area
 
         return {id: _id.toHexString(), ...rest}
     }

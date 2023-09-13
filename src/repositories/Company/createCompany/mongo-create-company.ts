@@ -8,7 +8,7 @@ export class CreateCompanyRepository implements ICreateCompanyRepository {
         const doc = await company.save()
         const companyInserted = await companyModel.findOne({_id: doc._id}).lean()
         console.log(companyInserted)
-        
+
         if(!doc || !companyInserted){
             throw new Error("Erro to try add company");
         }

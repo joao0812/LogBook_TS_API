@@ -4,15 +4,13 @@ import {ICreateAreaRepository} from '../../../controllers/Area/createArea/protoc
 import areaModel, { Area } from '../../../models/Area';
 export class CreateAreaRepository implements ICreateAreaRepository {
     async createOneArea(area_name: Omit<Area, 'id'>): Promise<Area> {
-        console.log(area_name)
-        /* const {insertedId} = await logBookDB.collection('areas').insertOne(area_name)
-        const area = await logBookDB.collection<Omit<Area, 'id'>>('areas').findOne({_id: insertedId}) */
-        let ar = new areaModel(area_name)
-        let doc = await ar.save()
-        if(!doc){
+        const area = new areaModel(area_name)
+        const doc = await area.save()
+        const araeInserted = await areaModel.findOne({_id: doc._id}).lean().populate('company_id')
+        if(!doc || !araeInserted){
             throw new Error('Area not created')
         }
-        const {_id, ...rest} = doc
+        const {_id, ...rest} = araeInserted
         return {id: _id.toHexString(),  ...rest}
     }
     async createAreas(area_name: Omit<Area, 'id'>[]): Promise<Area[]> {
@@ -21,7 +19,6 @@ export class CreateAreaRepository implements ICreateAreaRepository {
           area_name_obj.push(area)  
         })
         const {insertedIds} = await logBookDB.collection('areas').insertMany(area_name_obj)
-        //const areas = logBookDB.collection('areas').find({_id: {$in: insertedIds}})
         return [{
             id: '123',
             area_name: 'software',
