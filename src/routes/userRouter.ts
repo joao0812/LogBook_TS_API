@@ -5,6 +5,8 @@ import { UserGetRespository } from "../repositories/User/getUser/mongo-get-user"
 import { UserGetController } from "../controllers/User/getUser/get-user";
 import { UpdateUserRepository } from "../repositories/User/updateUser/mongo-update-user";
 import { UpdateUserController } from "../controllers/User/updateUser/update-user";
+import { DeleteUserRepository } from "../repositories/User/deleteUser/mongo-delete-user";
+import { DeleteUserController } from "../controllers/User/deleteUser/delete-user";
 
 const router = express.Router();
 
@@ -42,6 +44,13 @@ router
     const updateUserRepository = new UpdateUserRepository()
     const updateUserController = new UpdateUserController(updateUserRepository, req.params.id, req.body)
     const {body, statusCode} = await updateUserController.handle()
+    res.send(body).status(statusCode)
+  })
+  .delete('/:id', async (req, res)=> {
+    const deleteUserRepository = new DeleteUserRepository()
+    const deleteUserController = new DeleteUserController(deleteUserRepository, req.params.id)
+
+    const {body, statusCode} = await deleteUserController.handle()
     res.send(body).status(statusCode)
   })
 
