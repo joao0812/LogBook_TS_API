@@ -11,6 +11,6 @@ const positionSchema = new mongoose.Schema({
     company_id: {type: mongoose.Schema.Types.ObjectId, ref:'Company', required: true}
 })
 
-const positionModel = mongoose.model('Positon', positionSchema)
+const positionModel = mongoose.model('Position', positionSchema)
 
 export default positionModel

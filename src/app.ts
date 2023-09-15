@@ -15,6 +15,7 @@ import { GetAreaController } from "./controllers/Area/getArea/area-get";
 import areaRouter from './routes/areaRouter'
 import companyRouter from './routes/companyRoute'
 import positionRouter from './routes/positionRouter'
+import userRouter from './routes/userRouter'
 
 config();
 
@@ -38,3 +39,4 @@ app.use(logger('dev'))
 app.use('/companies', companyRouter)
 app.use('/areas', areaRouter)
 app.use('/positions', positionRouter)
+app.use('/users', userRouter)

@@ -11,13 +11,13 @@ export interface User {
   area_id: mongoose.Types.ObjectId;
   position_id: mongoose.Types.ObjectId;
   title?: string;
-  profileImage?: File;
+  profileImage?: Buffer;
 }
 
 const userSchema = new mongoose.Schema({
     name: {type: String, required: true},
     surName: {type: String, required: true},
-    email: {type: String, required: true},
+    email: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     adimission: {type: String, required: true},
     company_id: {type: mongoose.Schema.Types.ObjectId, ref: 'Company', required: true},
