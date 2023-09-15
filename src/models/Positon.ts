@@ -8,7 +8,7 @@ export interface Position {
 
 const positionSchema = new mongoose.Schema({
     name: {type: String, required: true},
-    company_id: {type: mongoose.Schema.Types.ObjectId, ref:'Company', required: true, onDelete: 'CASCADE'}
+    company_id: {type: mongoose.Schema.Types.ObjectId, ref:'Company', required: true}
 })
 
 const positionModel = mongoose.model('Positon', positionSchema)
