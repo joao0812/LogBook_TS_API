@@ -20,7 +20,7 @@ export class CreateCompanyController implements ICreateCompanyController {
     } catch (error) {
       return {
         statusCode: 500,
-        body: "ERROR",
+        body: String(error),
       };
     }
   }

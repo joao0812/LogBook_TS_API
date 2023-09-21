@@ -26,10 +26,12 @@ export class UpdateCompanyRepository implements IUpdateCompanyRepository {
       {
         id: oldCompany._id.toHexString(),
         name: oldCompany.name,
+        password: oldCompany.password
       },
       {
         id: newCompany._id.toHexString(),
         name: newCompany.name,
+        password: newCompany.password        
       },
     ];
   }
