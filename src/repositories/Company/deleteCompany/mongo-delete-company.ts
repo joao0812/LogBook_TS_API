@@ -3,6 +3,7 @@ import { IDeleteCompanyRepository } from "../../../controllers/Company/deleteCom
 import { Company, companyModel } from "../../../models/Company";
 import areaModel from "../../../models/Area";
 import positionModel from "../../../models/Positon";
+import userModel from "../../../models/User";
 
 export class DeleteCompanyRepository implements IDeleteCompanyRepository {
     async removeCompany(id: string): Promise<Company> {
@@ -16,6 +17,7 @@ export class DeleteCompanyRepository implements IDeleteCompanyRepository {
 
         const area = await areaModel.deleteMany({company_id: {_id: _id}})
         const position = await positionModel.deleteMany({company_id: {_id: _id}})
+        const user = await userModel.deleteMany({company_id: {_id: _id}})
 
         return {id: _id.toHexString(), ...rest}
     }
