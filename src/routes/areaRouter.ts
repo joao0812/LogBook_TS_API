@@ -11,7 +11,17 @@ import { UpdateAreaController } from "../controllers/Area/updateArea/update-area
 const router = express.Router();
 
 router
-.get("/:id", async (req, res) => {
+  .get("/company/:id", async (req, res) => {
+    const getAreaRepository = new GetAreaRepository();
+
+    const getAreaController = new GetAreaController(getAreaRepository);
+
+    const { body, statusCode } = await getAreaController.handleAll(
+      req.params.id
+    );
+    res.send(body).status(statusCode);
+  })
+  .get("/:id", async (req, res) => {
     const getAreaRepository = new GetAreaRepository();
     const getAreaController = new GetAreaController(
       getAreaRepository,
@@ -21,6 +31,7 @@ router
     const { body, statusCode } = await getAreaController.handleOne();
     res.send(body).status(statusCode);
   })
+
   .get("/", async (req, res) => {
     const getAreaRepository = new GetAreaRepository();
 
@@ -29,34 +40,46 @@ router
     const { body, statusCode } = await getAreaController.handleAll();
     res.send(body).status(statusCode);
   })
-  .post('/many', express.urlencoded({extended: true}), async (req, res)=> {
-    const createAreaRepository = new CreateAreaRepository()
+  .post("/many", express.urlencoded({ extended: true }), async (req, res) => {
+    const createAreaRepository = new CreateAreaRepository();
 
-    const createAreaController = new CreateAreaController(createAreaRepository, req.body)
+    const createAreaController = new CreateAreaController(
+      createAreaRepository,
+      req.body
+    );
     const { body, statusCode } = await createAreaController.handle();
     res.send(body).status(statusCode);
   })
-  .post('/', express.urlencoded({extended: true}), async (req, res)=> {
-    const createAreaRepository = new CreateAreaRepository()
+  .post("/", express.urlencoded({ extended: true }), async (req, res) => {
+    const createAreaRepository = new CreateAreaRepository();
 
-    const createAreaController = new CreateAreaController(createAreaRepository, req.body)
+    const createAreaController = new CreateAreaController(
+      createAreaRepository,
+      req.body
+    );
     const { body, statusCode } = await createAreaController.handleOne();
     res.send(body).status(statusCode);
   })
-  .put('/:id', express.urlencoded({extended: true}), async (req, res)=> {
-    const updateAreaRepository = new UpdateAreaRepository()
-    
-    const updateAreaController = new UpdateAreaController(updateAreaRepository, req.params.id ,req.body)
+  .put("/:id", express.urlencoded({ extended: true }), async (req, res) => {
+    const updateAreaRepository = new UpdateAreaRepository();
+
+    const updateAreaController = new UpdateAreaController(
+      updateAreaRepository,
+      req.params.id,
+      req.body
+    );
     const { body, statusCode } = await updateAreaController.handle();
     res.send(body).status(statusCode);
   })
-  .delete('/:id', async (req, res)=> {
-    const deleteAreaRepository = new DeleteAreaRepository()
-    
-    const deleteAreaController = new DeleteAreaController(deleteAreaRepository, req.params.id)
+  .delete("/:id", async (req, res) => {
+    const deleteAreaRepository = new DeleteAreaRepository();
+
+    const deleteAreaController = new DeleteAreaController(
+      deleteAreaRepository,
+      req.params.id
+    );
     const { body, statusCode } = await deleteAreaController.handle();
     res.send(body).status(statusCode);
-  })
-  
+  });
 
 export default router;

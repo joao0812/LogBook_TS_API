@@ -8,6 +8,6 @@ export interface ICreateAreaController {
 }
 
 export interface ICreateAreaRepository {
-    createAreas(area_name: Omit<Area, 'id'>[]): Promise<Area[]>
-    createOneArea(area_name: Omit<Area, 'id'>): Promise<Area>
+    createAreas(name: Omit<Area, 'id'>[]): Promise<Area[]>
+    createOneArea(name: Omit<Area, 'id'>): Promise<Area>
 }

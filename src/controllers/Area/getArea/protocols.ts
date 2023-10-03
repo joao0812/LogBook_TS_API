@@ -8,6 +8,6 @@ export interface IGetAreaController {
 }
 
 export interface IGetAreaRepository {
-    getAreas(): Promise<Area[]>,
+    getAreas(id?: string): Promise<Area[]>,
     getOneArea(id: string): Promise<Area>
 }

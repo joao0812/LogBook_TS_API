@@ -4,14 +4,17 @@ import { IGetAreaRepository } from "../../../controllers/Area/getArea/protocols"
 import areaModel, { Area } from "../../../models/Area";
 
 export class GetAreaRepository implements IGetAreaRepository {
-  async getAreas(): Promise<Area[]> {
-    const areas = await areaModel.find().populate("company_id").lean();
+  async getAreas(id?: string): Promise<Area[]> {
+    let areas = await areaModel.find().populate("company_id").lean();
     if (!areas) {
-      throw new Error("Erro to try get areas");
+      areas = await areaModel.find({company_id: new mongoose.Types.ObjectId(id)}).populate("company_id").lean();
+      if (!areas) {
+        throw new Error("Area not created");
+      }
     }
     return areas.map(({ _id, ...rest }) => ({
       ...rest,
-      id: _id.toHexString()
+      id: _id.toHexString(),
     }));
   }
   async getOneArea(id: string): Promise<Area> {

@@ -22,12 +22,12 @@ export class UpdateAreaRepository implements IUpdateAreaRepository {
     return [
       {
         id: oldArea._id.toHexString(),
-        area_name: oldArea.area_name,
+        name: oldArea.name,
         company_id: oldArea.company_id
       },
       {
         id: newArea._id.toHexString(),
-        area_name: newArea.area_name,
+        name: newArea.name,
         company_id: newArea.company_id
       },
     ];

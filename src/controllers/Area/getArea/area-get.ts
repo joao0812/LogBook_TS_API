@@ -5,9 +5,9 @@ import { IGetAreaController, IGetAreaRepository } from "./protocols";
 export class GetAreaController implements IGetAreaController {
   constructor(private readonly getAreaRepository: IGetAreaRepository, private readonly id?: string) {}
 
-  async handleAll(): Promise<HTTPresponse<Area[]>> {
+  async handleAll(id?: string): Promise<HTTPresponse<Area[]>> {
     try {
-      const areas = await this.getAreaRepository.getAreas();
+      const areas = await this.getAreaRepository.getAreas(id);
 
       return {
         statusCode: 200,
@@ -34,7 +34,7 @@ export class GetAreaController implements IGetAreaController {
     } catch (error) {
       return {
         statusCode: 500,
-        body: "ERROR",
+        body: String(error),
       };
     }
   }

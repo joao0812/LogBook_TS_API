@@ -10,6 +10,8 @@ import { UpdatePositionController } from '../controllers/Position/updatePosition
 
 const router = express.Router()
 
+// COLOCAR O GET COM O ID DO COMPANY PARA PEGAR TODOS AS POSITIONS DESSA COMPANY
+
 router  
     .post('/', express.urlencoded({extended: true}), express.json(), async(req, res)=> {
         const createPositionRepository = new CreatePositionRepository()
